@@ -1,0 +1,18 @@
+.wrppaer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.plan-wrapper{
+   width: 100vw;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.calendar-wrapper{
+
+}
+.calendar{
+    min-width: 700px;
+    height: 800px;
+}

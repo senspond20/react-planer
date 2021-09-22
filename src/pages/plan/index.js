@@ -1,6 +1,10 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './style.css'
+import { useRef } from 'react';
+
+// import styled from 'styled-components';
 
 const localizer = momentLocalizer(moment)
 const myEventsList =
@@ -68,49 +72,63 @@ const korMonth = [{
     kor : '1월',
     en  : ''
 }]
-const onClickHandler = () =>{
-    alert('click')
-}
+
+
 
 const MyCalendar = props => {
    
-    // const disableLoading = () =>{
-    //     const container = document.querySelector('.loading-logo');
-    //     container.style.opacity = 0;
-    // }
-    // useEffect(()=>{
-    //     document.addEventListener("DOMContentLoaded", disableLoading);
-    //     return ()=>{
-    //         document.removeEventListener("DOMContentLoaded", disableLoading)
-    //     }
-    // })
+    const useTitle = useRef();
+    const useStart = useRef();
+    const useEnd = useRef();
+
+    const formSubmit = (e)=>{
+        e.preventDefault(); 
+        console.log("gg")
+        console.log(useTitle.current.value)
+        console.log(useStart.current.value)
+        console.log(useEnd.current.value)
+
+    }
+
     return(
-    <div>
-        <Calendar
-            localizer={localizer}
-            events={myEventsList}
-            startAccessor="start"
-            defalutView ="month"
-            endAccessor="end"
-            style={{ height: 800 }}
-            eventPropGetter={
-                (event, start, end, isSelected) => {
-                    let newStyle = {
-                        backgroundColor: event.color,
-                        color: 'white',
-                        borderRadius: "3px",
-                        border: "1px",
-                        fontWeight : 700
-                    };
-                    return {
-                        className: "",
-                        style: newStyle
-                    };
-                }
-            }
-            onSelectEvent={event => alert(event.title)}
-            // onSelectSlot={this.handleSelect}
-        />
+    <div className ="wrapper">
+        <div className="plan-wrapper">
+            <div className ="calendar-wrapper">
+                <Calendar
+                    className ="calendar"
+                    localizer={localizer}
+                    events={myEventsList}
+                    startAccessor="start"
+                    defalutView ="month"
+                    endAccessor="end"
+                    style ={ {"height": "800px"}}
+                    eventPropGetter={
+                        (event, start, end, isSelected) => {
+                            let newStyle = {
+                                backgroundColor: event.color,
+                                color: 'white',
+                                borderRadius: "3px",
+                                border: "1px",
+                                fontWeight : 700
+                            };
+                            return {
+                                className: "",
+                                style: newStyle
+                            };
+                        }
+                    }
+                    onSelectEvent={event => alert(event.title)}
+                    // onSelectSlot={this.handleSelect}
+                />
+            </div>
+            <form onSubmit = {formSubmit}>        
+                <div><label>제목</label><input type ="text" name="title" ref={useTitle}/></div>
+                <div><label>시작일시</label><input type ="datetime-local" name="start"  ref={useStart}/></div>
+                <div><label>종료일시</label><input type ="datetime-local" name="end"  ref={useEnd}/></div>
+                <div><input type="submit" value="일정추가"/></div>
+                <div><input type="reset" value="초기화"/></div>
+            </form>
+        </div>
     </div>
     )
 }
